@@ -18,7 +18,7 @@ def create_app():
     @app.route("/")
     def index():
         return jsonify({
-            "message": "Flask DevOps App is running",
+            "message": "🚀 AUTO-DEPLOYED via CI/CD!",
             "version": os.getenv("APP_VERSION", "dev"),
             "environment": os.getenv("FLASK_ENV", "production")
         })
