@@ -1,0 +1,5 @@
+{
+  "hostname": "edcf1b5cb85b",
+  "version": "1.0.0",
+  "workers": "3"
+}

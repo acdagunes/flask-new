@@ -1,0 +1,5 @@
+{
+  "service": "flask-devops",
+  "status": "healthy",
+  "version": "1.0.0"
+}

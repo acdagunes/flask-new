@@ -1,0 +1,15 @@
+# DigitalOcean API Token (get from: https://cloud.digitalocean.com/account/api/tokens)
+do_token = "dop_v1_xxxxxxxxxxxxxxxxxxxx"
+
+# Docker Hub username
+docker_username = "your-dockerhub-username"
+
+# Optional: Change region
+region = "fra1"
+
+# Optional: Change droplet size
+droplet_size = "s-1vcpu-1gb"
+
+# Optional: Restrict SSH access to your IP only (recommended!)
+# Get your IP: curl ifconfig.me
+allowed_ssh_ips = ["0.0.0.0/0"]  # Change to ["YOUR.IP.ADD.RESS/32"]

@@ -1,0 +1,46 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - git
+  - jq
+
+runcmd:
+  # Install Docker
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
+  - systemctl enable docker
+  - systemctl start docker
+  
+  # Install Docker Compose
+  - apt-get install -y docker-compose-plugin
+  
+  # Create app directory
+  - mkdir -p /opt/flask-devops
+  - cd /opt/flask-devops
+  
+  # Clone repository
+  - git clone https://github.com/acdagunes/flask-new.git .
+  
+  # Pull and run
+  - docker pull ${docker_username}/${docker_image}:latest
+  - docker compose up -d
+  
+  # Health check
+  - sleep 30
+  - curl http://localhost/health
+
+write_files:
+  - path: /opt/flask-devops/.env
+    content: |
+      APP_VERSION=1.0.0
+      GUNICORN_WORKERS=3
+      FLASK_ENV=production
+      NGINX_PORT=80

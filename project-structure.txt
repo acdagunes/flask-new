@@ -1,0 +1,28 @@
+.
+├── app
+│   ├── __init__.py
+│   └── main.py
+├── docker-compose.yml
+├── Dockerfile
+├── Makefile
+├── nginx
+│   └── default.conf
+├── project-structure.txt
+├── README.md
+├── requirements.txt
+├── terraform
+│   ├── cloud-init.yaml
+│   ├── health-response.txt
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── production-response.txt
+│   ├── README.md
+│   ├── terraform-plan-output.txt
+│   ├── terraform-plan.txt
+│   ├── terraform.tfvars
+│   ├── terraform.tfvars.example
+│   ├── variables.tf
+│   └── version-response.txt
+└── wsgi.py
+
+4 directories, 22 files
