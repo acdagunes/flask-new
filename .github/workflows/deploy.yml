@@ -33,8 +33,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
             ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:buildcache,mode=max
       
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@v1.0.3
@@ -44,30 +42,9 @@ jobs:
           key: ${{ secrets.DO_SSH_KEY }}
           script: |
             cd /opt/flask-devops
-            
-            # Pull latest code
-            git pull origin main
-            
-            # Login to Docker Hub
-            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-            
-            # Pull latest image
             docker pull ${{ secrets.DOCKER_USERNAME }}/flask-devops:latest
-            
-            # Update image reference in docker-compose
-            sed -i 's|image: flask-devops:.*|image: ${{ secrets.DOCKER_USERNAME }}/flask-devops:latest|' docker-compose.yml
-            
-            # Restart services
             docker compose down
             docker compose up -d
-            
-            # Wait for health check
             sleep 15
-            
-            # Verify deployment
             curl -f http://localhost/health || exit 1
-            
-            # Cleanup
             docker image prune -f
-            
-            echo "✅ Deployment successful!"
