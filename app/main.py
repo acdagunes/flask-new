@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify
 import os
 import socket
@@ -18,9 +17,10 @@ def create_app():
     @app.route("/")
     def index():
         return jsonify({
-            "message": "🚀 AUTO-DEPLOYED via CI/CD!",
+            "message": "🚀 Production Flask DevOps App",
             "version": os.getenv("APP_VERSION", "dev"),
-            "environment": os.getenv("FLASK_ENV", "production")
+            "environment": os.getenv("FLASK_ENV", "production"),
+            "status": "✅ CI/CD Pipeline Active"
         })
     
     @app.route("/health")
