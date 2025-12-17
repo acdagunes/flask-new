@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import os
 import socket
 import logging
+from prometheus_flask_exporter import PrometheusMetrics
 
 logging.basicConfig(
     level=logging.INFO,
@@ -12,15 +13,21 @@ logger = logging.getLogger(__name__)
 def create_app():
     app = Flask(__name__)
     
+    # Prometheus metrics
+    metrics = PrometheusMetrics(app)
+    metrics.info('flask_app_info', 'Application info', version=os.getenv('APP_VERSION', 'dev'))
+    
     logger.info(f"Starting Flask app version {os.getenv('APP_VERSION', 'dev')}")
     
     @app.route("/")
     def index():
+        logger.info("Index endpoint accessed")
         return jsonify({
             "message": "🚀 Production Flask DevOps App",
             "version": os.getenv("APP_VERSION", "dev"),
             "environment": os.getenv("FLASK_ENV", "production"),
-            "status": "✅ CI/CD Pipeline Active"
+            "status": "✅ CI/CD Pipeline Active",
+            "monitoring": "📊 Prometheus + Grafana Enabled"
         })
     
     @app.route("/health")
@@ -43,14 +50,6 @@ def create_app():
             "version": os.getenv("APP_VERSION", "dev"),
             "hostname": socket.gethostname(),
             "workers": os.getenv("GUNICORN_WORKERS", "unknown")
-        })
-    
-    @app.route("/metrics")
-    def metrics():
-        return jsonify({
-            "app": "flask-devops",
-            "version": os.getenv("APP_VERSION", "dev"),
-            "uptime": "ok"
         })
     
     @app.errorhandler(404)
