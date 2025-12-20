@@ -101,8 +101,8 @@ flask-devops/
 
 ```bash
 # Clone repository
-git clone https://github.com/acdagunes/flask-new.git
-cd flask-new
+git clone https://github.com/acdagunes/devops-portfolio.git
+cd devops-portfolio
 
 # Configure environment
 cp .env.example .env
