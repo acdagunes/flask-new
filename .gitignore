@@ -1,4 +1,9 @@
-[ზემოთ მოცემული .gitignore შიგთავსი]
+# Environment files
+.env
+.env.local
+.env.production
+.env.*.local
+
 # Python
 __pycache__/
 *.py[cod]
@@ -6,37 +11,32 @@ __pycache__/
 *.so
 .Python
 venv/
-env/
 ENV/
-*.egg-info/
-dist/
-build/
+env/
+.venv/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# Environment variables
-.env.local
-.env.*.local
-
-# Logs
-*.log
-logs/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
 
 # Docker
-*.pid
-*.seed
-*.pid.lock
+*.log
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
+# Secrets (never commit these)
+*.pem
+*.key
+secrets/
+```
